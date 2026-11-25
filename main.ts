@@ -5,8 +5,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
+const here = dirname(fileURLToPath(import.meta.url)), outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 
 function readEntry(): string {
   const text = readFileSync(join(here, "line.txt"), "utf8").replace(/\s+$/, "");

@@ -7,17 +7,17 @@ import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url)), outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 
-function readEntry(): string {
+function loadEntry(): string {
   const text = readFileSync(join(here, "line.txt"), "utf8").replace(/\s+$/, "");
-  const problems: string[] = [];
-  if (text.length === 0) problems.push("empty");
-  if (text.length > 200) problems.push(`too long: ${text.length}`);
-  if (/[\r\n]/.test(text)) problems.push("must be one line");
-  if (problems.length > 0) throw new Error(`line.txt invalid: ${problems.join("; ")}`);
+  const issues: string[] = [];
+  if (text.length === 0) issues.push("empty");
+  if (text.length > 200) issues.push(`too long: ${text.length}`);
+  if (/[\r\n]/.test(text)) issues.push("must be one line");
+  if (issues.length > 0) throw new Error(`line.txt invalid: ${issues.join("; ")}`);
   return text;
 }
 
-const entry = readEntry();
+const entry = loadEntry();
 mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, "entry.txt"), entry, "utf8");
 console.log(entry);
